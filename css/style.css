@@ -1,0 +1,76 @@
+html, body {
+    font-family: 'Lucida Grande', Helvetica, Arial, Verdana, sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+h1 {
+    margin: 15px 0;
+    font-size: 19px;
+    line-height: 23px;
+}
+h2 {
+    margin: 20px 0 7px 0;
+    font-size: 15px;
+    line-height: 23px;
+}
+
+p {
+   margin: 10px 15px;
+}
+
+a { color: green; }
+a:hover { color: blue; }
+
+label {
+   width: 100px;
+   display: block;
+   float: left;
+}
+
+#page {
+   margin-top: 20px;
+   margin-left: 20px;
+}
+
+#page div.left {
+   float: left;
+}
+
+#page div.right {
+   float: left;
+   padding-left: 20px;
+}
+
+.clearleft { clear: left; }
+
+#options {
+   display: block;
+   border: 0px solid red;
+}
+#ckbConfirm {
+   float: left;
+}
+
+.nofloat {
+   float: none;
+   width: auto;
+}
+
+#txtLog {
+   display: block;
+   overflow-y: scroll;
+   width: 400px;
+   height: 270px;
+   border: 1px solid black;
+}
+#txtLog p {
+   margin: 0 5px;
+   border-bottom: 1px solid gray;
+}
+#txtLog span.server {
+   color: gray;
+}
+#txtLog span.error {
+   color: red;
+}
