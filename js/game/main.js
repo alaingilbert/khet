@@ -851,7 +851,6 @@ function init() {
                 "sounds/move.ogg", "sounds/kill.ogg"]);
 
    loader.complete = function() {
-   console.log('CRISSSS INIT');
       switchState("splash");
       bindKeys();
    };
