@@ -30,7 +30,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 function Obj() {
-    objs.push(this);
+   objs.push(this);
+
+   this.focus = function() {
+      var tmp = this;
+      for (var i in objs) {
+         if (objs[i] == this) {
+            objs.splice(i, 1);
+            break;
+         }
+      }
+      objs.push(tmp);
+   };
 }
 
 function Point(x, y) {
@@ -91,6 +102,11 @@ var formulas = {
     }
 };
 
+var animations = 0;
+var finished = 0;
+function animationsComplete() {
+}
+
 function Label(params) {
     Obj.call(this);
     this.x = params.x != undefined ? params.x : null;
@@ -107,7 +123,16 @@ function Label(params) {
     this.angle = params.angle ? params.angle : 0;
     this.color = params.color ? params.color : "rgba(0, 0, 0, 1)";
     this.scale = 100;
+
+    this.width = c.measureText(this.text).width;
+    this.height = this.textSize;
     
+    this.onClick = function(e) { };
+    this.onMouseOut = function(e) { };
+    this.onMouseMove = function(e) { };
+    this.onMouseOver = function(e) { };
+    this.onMouseDown = function(e) { };
+    this.onMouseUp = function(e) { };
     this.onUpdate = function() { };
     this.onPaint = function() {
         c.save();
@@ -125,6 +150,7 @@ function Label(params) {
     this.isInside = function(point) { return point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height; };
     
     this.animate = function(conf, callback) {
+       animations++;
 
         conf.start = (conf.start != undefined) ? conf.start : 0;
 
@@ -193,6 +219,12 @@ function Label(params) {
                         }
                         this.scale = conf.scale;
                     }
+
+                    finished++;
+                    if (finished == animations) {
+                        animationsComplete();
+                    }
+
                     if (callback) { callback(); }
                 }
             }
@@ -260,6 +292,7 @@ function Anim(params) {
     this.isInside = function(point) { return point.x >= this.x && point.x <= this.x + this.width && point.y >= this.y && point.y <= this.y + this.height; };
 
     this.animate = function(conf, callback) {
+        animations++;
 
         conf.start = (conf.start != undefined) ? conf.start : 0;
 
@@ -326,11 +359,29 @@ function Anim(params) {
                         }
                         this.scale = conf.scale;
                     }
+
+                    finished++;
+                    if (finished == animations) {
+                        animationsComplete();
+                    }
+
                     if (callback) { callback(); }
                 }
             }
         };
-
-
     };
+}
+
+function Sprite(params) {
+   Anim.call(this, params);
+   this.frame = params.frame != undefined ? params.frame : null;
+   this.onPaint = function() {
+      var frameh = 0;
+      var framew = this.frame;
+      if (this.frame >= this.img.width / this.width) {
+         framew -= this.img.width / this.width;
+         frameh++;
+      }
+      c.drawImage(this.img, framew*this.width, frameh*this.height, this.width, this.height, this.x, this.y, this.width, this.height);
+   };
 }

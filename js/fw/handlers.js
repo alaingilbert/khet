@@ -12,7 +12,7 @@ HTMLElement.prototype.init = function() { };
 function bindKeys() {
    var overEl = false;
    canvas.onmousemove = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       for (i = objs.length-1; i >= 0; i--) {
          if (objs[i].isInside(pos)) {
             if (!overEl && !objs[i].mouseOver) {
@@ -36,7 +36,7 @@ function bindKeys() {
    };
 
    canvas.onmouseout = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       for (i in objs) {
          if (objs[i].mouseOver) {
             objs[i].onMouseOut(pos);
@@ -48,7 +48,7 @@ function bindKeys() {
    };
 
    canvas.onclick = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       for (i = objs.length-1; i >= 0; i--) {
          if (objs[i].isInside(pos)) {
             objs[i].onClick(pos);
@@ -60,7 +60,7 @@ function bindKeys() {
    };
 
    canvas.ondblclick = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       for (i = objs.length-1; i >= 0; i--) {
          if (objs[i].isInside(pos)) {
             objs[i].onDblClick(pos);
@@ -72,7 +72,7 @@ function bindKeys() {
    };
 
    canvas.onmousedown = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       pos.button = e.button;
 
       for (i = objs.length-1; i >= 0; i--) {
@@ -86,7 +86,7 @@ function bindKeys() {
    };
 
    canvas.onmouseup = function(e) {
-      var pos = new Point(e.x - canvas.offsetLeft, e.y - canvas.offsetTop);
+      var pos = new Point(e.clientX - canvas.offsetLeft + getScroll().x, e.clientY - canvas.offsetTop + getScroll().y);
       for (i = objs.length-1; i >= 0; i--) {
          if (objs[i].isInside(pos)) {
             objs[i].onMouseUp(pos);
